@@ -2714,6 +2714,8 @@ in {
 
   nxt-python = callPackage ../development/python-modules/nxt-python { };
 
+  nudatus = callPackage ../development/python-modules/nudatus { };
+
   odfpy = callPackage ../development/python-modules/odfpy { };
 
   openrazer = callPackage ../development/python-modules/openrazer/pylib.nix { };
