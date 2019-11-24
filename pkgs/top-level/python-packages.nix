@@ -2747,6 +2747,8 @@ in {
 
   pex = callPackage ../development/python-modules/pex { };
 
+  pgzero = callPackage ../development/python-modules/pgzero { };
+
   phe = callPackage ../development/python-modules/phe { };
 
   phpserialize = callPackage ../development/python-modules/phpserialize { };
