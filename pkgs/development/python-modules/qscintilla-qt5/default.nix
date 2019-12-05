@@ -1,7 +1,6 @@
 { lib
 , pythonPackages
 , qscintilla
-, lndir
 , qtbase
 }:
 with pythonPackages;
@@ -11,7 +10,7 @@ buildPythonPackage {
   src = qscintilla.src;
   format = "other";
 
-  nativeBuildInputs = [ lndir sip qtbase ];
+  nativeBuildInputs = [ sip qtbase ];
   buildInputs = [ qscintilla ];
   propagatedBuildInputs = [ pyqt5 ];
 
@@ -23,9 +22,7 @@ buildPythonPackage {
   '';
 
   preConfigure = ''
-    mkdir -p $out
-    lndir ${pyqt5} $out
-    rm -rf "$out/nix-support"
+    mkdir -p "$out/share/sip/PyQt5"
     cd Python
     substituteInPlace configure.py \
       --replace "qmake = {'CONFIG': 'qscintilla2'}" "qmake = {'CONFIG': 'qscintilla2', 'QT': 'widgets printsupport'}"

@@ -8,7 +8,7 @@ index c7f1a86..48929c5 100644
  install_requires = [
 -    'PyQt5==5.12.1;"arm" not in platform_machine',
 -    'QScintilla==2.11.1;"arm" not in platform_machine',
-+    'PyQt5>=5.11.3,<=5.12.1;"arm" not in platform_machine',
++    'PyQt5>=5.11.3,<=5.13.1;"arm" not in platform_machine',
 +    'QScintilla>=2.11.1,<3;"arm" not in platform_machine',
      'PyQtChart==5.12;"arm" not in platform_machine',
 -    'pycodestyle==2.4.0',

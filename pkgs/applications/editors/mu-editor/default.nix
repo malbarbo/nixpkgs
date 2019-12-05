@@ -1,4 +1,8 @@
-{ lib, python3Packages, fetchFromGitHub, libsForQt5 }:
+{ lib
+, python3Packages
+, fetchFromGitHub
+, wrapQtAppsHook
+}:
 
 python3Packages.buildPythonApplication rec {
   pname = "mu-editor";
@@ -13,7 +17,34 @@ python3Packages.buildPythonApplication rec {
 
   patches = [ ./soften-dependency-versions.patch ];
 
-  buildInputs = with python3Packages; [ nudatus qtconsole pyqt5 pgzero semver pycodestyle qscintilla-qt5 pyflakes pyqtchart ];
+  nativeBuildInputs = [
+    wrapQtAppsHook
+  ];
+
+  dontWrapQtApps = true;
+
+  preFixup = ''
+    wrapQtApp $out/bin/mu-editor
+  '';
+
+  propagatedBuildInputs = with python3Packages; [
+    appdirs
+    black
+    flask
+    nudatus
+    pgzero
+    pycodestyle
+    pyflakes
+    pyqt5
+    pyqtchart
+    pyserial
+    pytest
+    qscintilla-qt5
+    qtconsole
+    semver
+  ];
+
+  doCheck = false;
 
   meta = with lib; {
     homepage = "https://codewith.mu/";
@@ -21,5 +52,4 @@ python3Packages.buildPythonApplication rec {
     maintainers = [ maintainers.das-g ];
     platforms = platforms.all;
   };
-
 }

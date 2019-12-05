@@ -19982,7 +19982,8 @@ in
     lua = lua5;
   };
 
-  mu-editor = callPackage ../applications/editors/mu { };
+  mu-editor = libsForQt5.callPackage ../applications/editors/mu-editor { };
+
   monotoneViz = callPackage ../applications/version-management/monotone-viz {
     ocamlPackages = ocaml-ng.ocamlPackages_4_01_0;
   };
