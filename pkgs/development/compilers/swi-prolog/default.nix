@@ -6,6 +6,7 @@
 , extraLibraries ? [ jdk unixODBC libXpm libSM libXt freetype fontconfig ]
 , extraPacks     ? []
 , withGui ? false
+, buildPackages
 }:
 
 let
@@ -28,6 +29,8 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [ cmake pkgconfig ];
 
+  depsBuildBuild = [ buildPackages.stdenv.cc ];
+
   buildInputs = [ gmp readline openssl
     libarchive libyaml db pcre libedit libossp_uuid
     zlib ]
@@ -37,7 +40,7 @@ stdenv.mkDerivation {
 
   hardeningDisable = [ "format" ];
 
-  cmakeFlags = [ "-DSWIPL_INSTALL_IN_LIB=ON" ];
+  cmakeFlags = [ "-DCMAKE_SKIP_INSTALL_RPATH=ON" "-DINSTALL_DOCUMENTATION=OFF" "-DSWIPL_PACKAGES=OFF" "-DSWIPL_SHARED_LIB=OFF" "-DBUILD_SWIPL_LD=OFF" ];
 
   postInstall = builtins.concatStringsSep "\n"
   ( builtins.map (packInstall "$out") extraPacks
