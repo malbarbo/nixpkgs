@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, zlib, apngSupport ? true }:
+{ stdenv, fetchurl, zlib, apngSupport ? true, setjmp ? true, buildBinaries ? true }:
 
 assert zlib != null;
 
@@ -18,12 +18,16 @@ in stdenv.mkDerivation rec {
     url = "mirror://sourceforge/libpng/libpng-${version}.tar.xz";
     sha256 = "1jl8in381z0128vgxnvn33nln6hzckl7l7j9nqvkaf1m9n1p0pjh";
   };
+  prePatch = stdenv.lib.optionalString (!setjmp) "echo '@ #define PNG_NO_SETJMP' > pngusr.dfa";
   postPatch = whenPatched "gunzip < ${patch_src} | patch -Np1";
 
   outputs = [ "out" "dev" "man" ];
   outputBin = "dev";
 
   propagatedBuildInputs = [ zlib ];
+
+  buildPhase = stdenv.lib.optionalString (!buildBinaries) "make libpng16.la";
+  installPhase = stdenv.lib.optionalString (!buildBinaries) "make install-data install-libLTLIBRARIES";
 
   doCheck = true;
 
